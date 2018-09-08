@@ -19,6 +19,8 @@ lazy val root = (project in file("."))
       "-Ywarn-unused-import",
       "-Ypartial-unification"
     ),
+    scalacOptions in (Compile, console) += "-Ypartial-unification",
+    scalacOptions in (Compile, console) -= "-Ywarn-unused:imports",
     addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full),
     libraryDependencies ++= Seq(
       "org.typelevel"        %% "cats-core"  % catsVersion,
