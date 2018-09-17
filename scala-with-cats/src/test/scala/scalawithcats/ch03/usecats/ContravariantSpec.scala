@@ -1,4 +1,4 @@
-package scalawithcats.ch03.cats
+package scalawithcats.ch03.usecats
 
 import cats.{Contravariant, Show}
 import cats.syntax.contravariant._

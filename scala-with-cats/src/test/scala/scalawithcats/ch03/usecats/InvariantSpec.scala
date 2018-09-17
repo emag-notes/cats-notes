@@ -1,4 +1,4 @@
-package scalawithcats.ch03.cats
+package scalawithcats.ch03.usecats
 
 import cats.Monoid
 import cats.instances.string._

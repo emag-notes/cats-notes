@@ -1,6 +1,6 @@
 package scalawithcats.ch03
 
-import cats.Functor
+import cats.{Functor, Monad}
 
 sealed trait Tree[+A]
 
@@ -22,4 +22,32 @@ object Tree {
       }
   }
 
+  implicit val treeMonad: Monad[Tree] = new Monad[Tree] {
+    override def pure[A](value: A): Tree[A] = Leaf(value)
+
+    override def flatMap[A, B](tree: Tree[A])(func: A => Tree[B]): Tree[B] =
+      tree match {
+        case Branch(left, right) => Branch(flatMap(left)(func), flatMap(right)(func))
+        case Leaf(value)         => func(value)
+      }
+
+    override def tailRecM[A, B](arg: A)(func: A => Tree[Either[A, B]]): Tree[B] =
+      func(arg) match {
+        case Branch(left, right) =>
+          Branch(
+            flatMap(left) {
+              case Left(l)  => tailRecM(l)(func)
+              case Right(l) => pure(l)
+            },
+            flatMap(right) {
+              case Left(r)  => tailRecM(r)(func)
+              case Right(r) => pure(r)
+            },
+          )
+
+        case Leaf(Left(value)) => tailRecM(value)(func)
+
+        case Leaf(Right(value)) => Leaf(value)
+      }
+  }
 }
