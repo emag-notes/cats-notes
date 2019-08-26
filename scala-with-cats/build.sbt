@@ -1,30 +1,19 @@
-val catsVersion      = "1.1.0"
-val scalaTestVersion = "3.0.5"
+name := "scala-with-cats"
+version := "0.0.1-SNAPSHOT"
 
-lazy val root = (project in file("."))
-  .settings(
-    organization := "cats-notes",
-    name := "scala-with-cats",
-    version := "0.0.1-SNAPSHOT",
-    scalaVersion := "2.12.6",
-    scalacOptions in (Compile, compile) ++= Seq(
-      "-deprecation",
-      "-feature",
-      "-unchecked",
-      "-Xlint",
-      "-Ywarn-dead-code",
-      "-Ywarn-nullary-unit",
-      "-Ywarn-numeric-widen",
-      "-Ywarn-unused",
-      "-Ywarn-unused-import",
-      "-Ypartial-unification"
-    ),
-    scalacOptions in (Compile, console) += "-Ypartial-unification",
-    scalacOptions in (Compile, console) -= "-Ywarn-unused:imports",
-    addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full),
-    libraryDependencies ++= Seq(
-      "org.typelevel"        %% "cats-core"  % catsVersion,
-      "com.github.mpilquist" %% "simulacrum" % "0.12.0",
-      "org.scalatest"        %% "scalatest"  % scalaTestVersion % Test
-    )
-  )
+scalaVersion := "2.12.9"
+
+scalacOptions ++= Seq(
+  "-encoding", "UTF-8",   // source files are in UTF-8
+  "-deprecation",         // warn about use of deprecated APIs
+  "-unchecked",           // warn about unchecked type parameters
+  "-feature",             // warn about misused language features
+  "-language:higherKinds",// allow higher kinded types without `import scala.language.higherKinds`
+  "-Xlint",               // enable handy linter warnings
+  "-Xfatal-warnings",     // turn compiler warnings into errors
+  "-Ypartial-unification" // allow the compiler to unify type constructors of different arities
+)
+
+libraryDependencies += "org.typelevel" %% "cats-core" % "1.6.1"
+
+addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.10")
