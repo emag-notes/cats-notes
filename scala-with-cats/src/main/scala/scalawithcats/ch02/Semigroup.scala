@@ -1,5 +1,0 @@
-package scalawithcats.ch02
-
-trait Semigroup[A] {
-  def combine(x: A, y: A): A
-}
